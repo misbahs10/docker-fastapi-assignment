@@ -1,22 +1,35 @@
+from datetime import date
+from typing import Literal
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 app = FastAPI(
     title="Task Manager API",
-    description="A FastAPI application for managing tasks",
-    version="1.0.0"
+    description="Task Manager API with priority and scheduling",
+    version="2.0.0"
 )
 
 # Temporary in-memory storage
 tasks = []
 
-# Task schema
+
 class Task(BaseModel):
-    id: int
-    title: str
-    description: str
+    id: int = Field(gt=0)
+    title: str = Field(min_length=1)
+    description: str = Field(min_length=1)
     completed: bool = False
+
+    due_date: date | None = None
+    priority: Literal["Low", "Medium", "High"] = "Medium"
+    duration: Literal[
+        "Very Short (0-1h)",
+        "Short (1-3h)",
+        "Medium (3-5h)",
+        "Long (5h+)"
+    ] = "Medium (3-5h)"
+
+    difficulty: int = Field(default=5, ge=1, le=12)
 
 
 @app.get("/")
@@ -38,10 +51,7 @@ def get_task(task_id: int):
         if task["id"] == task_id:
             return task
 
-    raise HTTPException(
-        status_code=404,
-        detail="Task not found"
-    )
+    raise HTTPException(status_code=404, detail="Task not found")
 
 
 @app.post("/tasks")
@@ -78,10 +88,7 @@ def update_task(task_id: int, updated_task: Task):
                 "task": updated_task
             }
 
-    raise HTTPException(
-        status_code=404,
-        detail="Task not found"
-    )
+    raise HTTPException(status_code=404, detail="Task not found")
 
 
 @app.delete("/tasks/{task_id}")
@@ -89,12 +96,6 @@ def delete_task(task_id: int):
     for task in tasks:
         if task["id"] == task_id:
             tasks.remove(task)
+            return {"message": "Task deleted successfully"}
 
-            return {
-                "message": "Task deleted successfully"
-            }
-
-    raise HTTPException(
-        status_code=404,
-        detail="Task not found"
-    )
+    raise HTTPException(status_code=404, detail="Task not found")
