@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 
@@ -8,7 +9,7 @@ from datetime import date, timedelta
 # CONFIGURATION
 # --------------------------------------------------
 
-API_URL = "http://127.0.0.1:8000"
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 st.set_page_config(
     page_title="Taskly | Task Manager",
