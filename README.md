@@ -1,26 +1,22 @@
-# Task Manager — FastAPI & Streamlit
+# Dockerized FastAPI Task Manager
 
-A Dockerized Task Management application built with **FastAPI** as the backend REST API and **Streamlit** as the interactive frontend dashboard.
-
-## Project Overview
-
-Task Manager helps users create, organize, track, update, and complete tasks through a user-friendly dashboard.
-
-The project uses Docker Compose to run the backend and frontend as separate services.
+A Task Management application built with **FastAPI**, **Streamlit**, and **Docker**. It provides a REST API for managing tasks and an interactive dashboard for creating, updating, completing, and deleting tasks.
 
 ## Features
 
-- Create, view, update, and delete tasks
-- Set task priority and due dates
-- Track task completion status
-- Interactive Streamlit dashboard
-- REST API powered by FastAPI
-- API documentation with Swagger UI
-- Docker and Docker Compose support
+- Create, read, update, and delete tasks (CRUD).
+- Interactive Streamlit dashboard.
+- Task priorities: Low, Medium, High.
+- Due dates and task duration.
+- Task difficulty levels.
+- Mark tasks as completed.
+- FastAPI Swagger API documentation.
+- Docker containerization.
+- Docker Compose for running backend and frontend together.
 
-## Tech Stack
+## Technologies Used
 
-- Python
+- Python 3.12
 - FastAPI
 - Streamlit
 - Pydantic
@@ -45,70 +41,72 @@ Docker-FastAPI-Assignment/
 
 ## Run with Docker Compose
 
-Make sure Docker Desktop is running.
-
-Clone the repository:
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/misbahs10/docker-fastapi-assignment.git
 ```
 
-Open the project directory:
+### 2. Navigate to the project directory
 
 ```bash
 cd docker-fastapi-assignment
 ```
 
-Build and start both services:
+### 3. Build and start containers
 
 ```bash
 docker compose up --build -d
 ```
 
-Check running containers:
-
-```bash
-docker compose ps
-```
-
-View logs:
-
-```bash
-docker compose logs
-```
-
-Stop services:
-
-```bash
-docker compose down
-```
-
-## Application URLs
+### 4. Access the application
 
 | Service | URL |
 |---|---|
 | Streamlit Dashboard | http://localhost:8501 |
 | FastAPI Backend | http://localhost:8000 |
-| Swagger API Documentation | http://localhost:8000/docs |
+| Swagger API Docs | http://localhost:8000/docs |
+
+### 5. Check running containers
+
+```bash
+docker compose ps
+```
+
+### 6. Stop containers
+
+```bash
+docker compose down
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | API home |
+| GET | `/tasks` | Get all tasks |
+| GET | `/tasks/{task_id}` | Get a specific task |
+| POST | `/tasks` | Create a task |
+| PUT | `/tasks/{task_id}` | Update a task |
+| DELETE | `/tasks/{task_id}` | Delete a task |
 
 ## Docker Hub
 
-Docker Hub Repository:
+Docker image:
 
-https://hub.docker.com/r/misbahsajjad/task-manager-api
+```bash
+docker pull misbahsajjad/task-manager-api:2.0
+```
 
-## GitHub Repository
-
-https://github.com/misbahs10/docker-fastapi-assignment
+[View Docker Hub Repository](https://hub.docker.com/r/misbahsajjad/task-manager-api)
 
 ## Important Note
 
-The current backend uses in-memory storage for tasks. Task data is not persisted when the backend process or container is recreated.
+This project currently uses in-memory storage for tasks. Task data is not persistent and may be lost when the backend process or container restarts.
 
 ## Author
 
 **Misbah Sajjad**
 
-GitHub: https://github.com/misbahs10
-
-LinkedIn: https://www.linkedin.com/in/misbahsajjad23
+- GitHub: https://github.com/misbahs10
+- LinkedIn: https://www.linkedin.com/in/misbahsajjad23/
